@@ -13,7 +13,7 @@ namespace CoreNg.RequestResponse.Base
         public BaseResponse()
         {
             this.ErrorMessages = new List<string>();
-            this.IsSuccessful = false;
+            this.IsSuccessful = true;
         }
        
         private void AddError(string msg)

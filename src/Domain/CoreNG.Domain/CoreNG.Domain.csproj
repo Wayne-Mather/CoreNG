@@ -6,6 +6,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Common\CoreNG.Common\CoreNG.Common.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\CoreNg.RequestResponse\CoreNg.RequestResponse.csproj" />
+      <ProjectReference Include="..\..\Persistence\CoreNG.Persistence\CoreNG.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Admin" />
+      <Folder Include="Budget" />
+      <Folder Include="Categories" />
+      <Folder Include="Ledger" />
+      <Folder Include="Scheduled" />
     </ItemGroup>
 
 </Project>

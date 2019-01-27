@@ -26,15 +26,10 @@ namespace CoreNG.Persistence.Sqlite
                 if (!AlreadyInTransaction)
                 {
                     AlreadyInTransaction = true;
-                    return new DatabaseContextTransaction(this, this.Db.BeginTransaction());
+                    return new DatabaseContextTransaction(this, this.Database.BeginTransaction());
                 }
             }
             return new DatabaseContextTransaction(this);
-        }
-
-        public DatabaseFacade Db
-        {
-            get { return this.Database; }
         }
 
         public CoreNgDbContext()

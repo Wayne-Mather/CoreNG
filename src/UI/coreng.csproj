@@ -27,4 +27,9 @@
     <ProjectReference Include="..\Persistence\CoreNG.Persistence\CoreNG.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers" />
+    <Folder Include="Domain" />
+  </ItemGroup>
+
 </Project>

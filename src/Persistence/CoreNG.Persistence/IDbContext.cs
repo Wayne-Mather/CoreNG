@@ -1,4 +1,5 @@
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CoreNG.Common.Entities;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CoreNG.Persistence
 {
-    public interface IDbContext
+    public interface IDbContext : IDisposable
     {
         DbSet<Account> Accounts { get; set; }
         DbSet<Budget> Budgets { get; set; }
@@ -19,7 +20,7 @@ namespace CoreNG.Persistence
         bool TransactionsSupported { get; }
         IDatabaseContextTransaction GetTransaction();
         
-        DatabaseFacade Db { get; }
+        DatabaseFacade Database { get; }
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));

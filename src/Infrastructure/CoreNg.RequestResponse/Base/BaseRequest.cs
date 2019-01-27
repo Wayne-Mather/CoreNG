@@ -12,7 +12,7 @@ namespace CoreNg.RequestResponse.Base
         public BaseRequest()
         {
             this.ErrorMessages = new List<string>();
-            this.IsValid = true;
+            this.IsValid = false;
         }
 
         public virtual TResponse Send()
@@ -25,6 +25,10 @@ namespace CoreNg.RequestResponse.Base
             if (this.Model == null)
             {
                 this.IsValid = false;
+            }
+            else
+            {
+                this.IsValid = true;
             }
             return this.IsValid;
         }

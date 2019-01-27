@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNG.Persistence.SqlServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNG.Persistence.Sqlite", "Persistence\CoreNG.Persistence.Sqlite\CoreNG.Persistence.Sqlite.csproj", "{1856D64A-D2CC-47EE-BBEC-FDCAFD676854}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCoreNG.Ui", "..\Testing\TestCoreNG.Ui\TestCoreNG.Ui.csproj", "{E53BDBC0-E432-4F7D-A9AF-7459FFD1CB04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{1856D64A-D2CC-47EE-BBEC-FDCAFD676854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1856D64A-D2CC-47EE-BBEC-FDCAFD676854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1856D64A-D2CC-47EE-BBEC-FDCAFD676854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E53BDBC0-E432-4F7D-A9AF-7459FFD1CB04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E53BDBC0-E432-4F7D-A9AF-7459FFD1CB04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E53BDBC0-E432-4F7D-A9AF-7459FFD1CB04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E53BDBC0-E432-4F7D-A9AF-7459FFD1CB04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,5 +91,6 @@ Global
 		{B479A3F5-0C1F-4DE7-8898-C777B9F4235D} = {8A553224-82CB-43E0-8876-408A043903B6}
 		{753979CF-7669-4529-BEE6-A861B3347E6F} = {602ECF25-8217-47AC-A30F-725AFD6A4700}
 		{1856D64A-D2CC-47EE-BBEC-FDCAFD676854} = {602ECF25-8217-47AC-A30F-725AFD6A4700}
+		{E53BDBC0-E432-4F7D-A9AF-7459FFD1CB04} = {93152CA7-6A85-4161-93CF-7E0C881BE6B2}
 	EndGlobalSection
 EndGlobal
