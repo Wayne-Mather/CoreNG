@@ -5,20 +5,19 @@ using Xunit;
 
 namespace TestCoreNG.Ui
 {
-    public class CreateUserRequestShould: BaseTest
+    public class DeleteUserRequestShould: BaseTest
     {
         [Fact]
-        public void HaveAKnownDefaultRequestState()
+        public void HaveAKnownDefaultState()
         {
-            var request = new CreateUserRequest(_authContext, _userManager);
+            var request = new DeleteUserRequest(_authContext, _userManager);
             Assert.NotNull(request);
             Assert.NotNull(request.Model);
             Assert.NotNull(request.ErrorMessages);
             Assert.Empty(request.ErrorMessages);
             
             Assert.True(string.IsNullOrEmpty(request.Model.Username));
-            Assert.True(string.IsNullOrEmpty(request.Model.Password));
-            Assert.True(string.IsNullOrEmpty(request.Model.ConfirmPassword));
+
             Assert.False(request.IsValid);
             Assert.False(request.Validate());
         }
@@ -26,30 +25,36 @@ namespace TestCoreNG.Ui
         [Fact]
         public void HaveAKnownDefaultResponseState()
         {
-            var response = new CreateUserResponse();
+            var response = new DeleteUserResponse();
             Assert.NotNull(response);
             Assert.NotNull(response.Model);
             Assert.NotNull(response.ErrorMessages);
             Assert.Empty(response.ErrorMessages);
             
             Assert.True(string.IsNullOrEmpty(response.Model.Username));
-            Assert.True(string.IsNullOrEmpty(response.Model.Password));
-            Assert.True(string.IsNullOrEmpty(response.Model.ConfirmPassword));
             Assert.True(response.IsSuccessful);
         }
         
         [Fact]
-        public void SuccessfullyCreateAUser()
+        public void SuccessfullyDeleteAUser()
         {
             Assert.False(_authContext.Users.Any());
+
+            var createRequest = new CreateUserRequest(_authContext, _userManager);
+            createRequest.Model.Username = "test";
+            createRequest.Model.Password = "password123";
+            createRequest.Model.ConfirmPassword = createRequest.Model.Password;
+            var createResponse = createRequest.Send();
+            Assert.NotNull(createResponse);
+            Assert.True(createResponse.IsSuccessful);
+
+            Assert.True(_authContext.Users.Any());
             
-            var request = new CreateUserRequest(_authContext, _userManager);
+            var request = new DeleteUserRequest(_authContext, _userManager);
             Assert.NotNull(request);
             Assert.NotNull(request.Model);
 
             request.Model.Username = "test";
-            request.Model.Password = "Password123";
-            request.Model.ConfirmPassword = request.Model.Password;
 
             var response = request.Send();
             Assert.NotNull(response);
@@ -57,7 +62,8 @@ namespace TestCoreNG.Ui
             Assert.NotNull(response.Model);
             Assert.NotNull(response.ErrorMessages);
             Assert.Empty(response.ErrorMessages);
-            
+
+            Assert.False(_authContext.Users.Any());
         }
     }
 }
