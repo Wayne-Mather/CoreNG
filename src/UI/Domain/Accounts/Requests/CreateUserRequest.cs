@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using coreng.Data;
@@ -43,6 +44,8 @@ namespace CoreNG.Domain.Accounts.Requests
         {
             if (base.Validate())
             {
+                var haveBothPasswords = true;
+                
                 if (string.IsNullOrEmpty(this.Model.Username))
                 {
                     this.AddEmptyPropertyError(nameof(this.Model.Username));
@@ -51,11 +54,21 @@ namespace CoreNG.Domain.Accounts.Requests
                 if (string.IsNullOrEmpty(this.Model.Password))
                 {
                     this.AddEmptyPropertyError(nameof(this.Model.Password));
+                    haveBothPasswords = false;
                 }
                 
                 if (string.IsNullOrEmpty(this.Model.ConfirmPassword))
                 {
                     this.AddEmptyPropertyError(nameof(this.Model.ConfirmPassword));
+                    haveBothPasswords = false;
+                }
+
+                if (haveBothPasswords)
+                {
+                    if (this.Model.Password != this.Model.ConfirmPassword)
+                    {
+                        this.AddCustomerError("Password and ConfirmPassword do not match");
+                    }
                 }
             }
 

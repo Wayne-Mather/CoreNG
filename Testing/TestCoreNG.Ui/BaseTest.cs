@@ -34,16 +34,32 @@ namespace TestCoreNG.Ui
         {
             var assembly = Assembly.GetAssembly(typeof(coreng.Startup));
 
-            IWebHost host = WebHost.CreateDefaultBuilder(null)
+            IWebHostBuilder builder = WebHost.CreateDefaultBuilder(null)
                 .UseStartup(assembly.FullName)
-                .UseUrls()
-                .Build();
+                .UseUrls();
+
+            // Ensure we use in memory SQLite providers
+            builder.ConfigureServices(services =>
+            {
+                var connectionString = "DataSource=:memory:";
+
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlite(connectionString)
+                );
+
+                services.AddDbContext<CoreNG.Persistence.Sqlite.CoreNgDbContext>(o =>
+                {
+                    o.UseSqlite(connectionString);
+                });
+            });
+            
+            IWebHost host = builder.Build();
 
             _scope = host.Services.CreateScope();
             _services = _scope.ServiceProvider;
             _authContext = _services.GetRequiredService<ApplicationDbContext>();
             _context = _services.GetRequiredService<CoreNgDbContext>();
-
+            
             _authContext.Database.OpenConnection();
             _authContext.Database.EnsureCreated();
             
