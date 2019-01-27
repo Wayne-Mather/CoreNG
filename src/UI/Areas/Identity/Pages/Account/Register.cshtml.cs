@@ -64,7 +64,7 @@ namespace coreng.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 // TODO: Add corporate domain name here either static variable, configuration, DI....
-                var user = new ApplicationUser { UserName = Input.Username, Email = $"{Input.Email}@127.0.0.1" };
+                var user = new ApplicationUser { UserName = Input.Username, Email = $"{Input.Username}@127.0.0.1" };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

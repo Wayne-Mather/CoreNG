@@ -20,6 +20,8 @@ namespace CoreNG.Common.Entities
     public class ScheduledTransaction
     {
         public int ScheduledTransactionId { get; set; }
+        public int AccountId { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
         public ScheduleType ScheduleType { get; set; }
         public DateTime StartDate { get; set; }
@@ -27,6 +29,9 @@ namespace CoreNG.Common.Entities
         
         public decimal Amount { get; set; }
         
+        public Byte[] Timestamp { get; set; }
         
+        public Account Account { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace TestCoreNg.Common
             Assert.NotNull(l);
             Assert.Equal(0, l.AccountId);
             Assert.Equal(0M,l.Amount);
-            Assert.NotEqual(Guid.Empty, l.TransactionId);
+            Assert.NotEqual(Guid.Empty, l.LedgerTransactionId);
             Assert.Equal(DateTime.MinValue, l.DateTime);
         }
     }

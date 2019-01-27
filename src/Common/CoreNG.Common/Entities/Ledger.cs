@@ -6,10 +6,10 @@ namespace CoreNG.Common.Entities
     {
         public Ledger()
         {
-            this.TransactionId = Guid.NewGuid();
+            this.LedgerTransactionId = Guid.NewGuid();
         }
         
-        public Guid TransactionId { get; set; }
+        public Guid LedgerTransactionId { get; set; }
         
         public int AccountId { get; set; }
         public int CategoryId { get; set; }
@@ -18,6 +18,8 @@ namespace CoreNG.Common.Entities
         
         public int Colour { get; set; }
         public bool Reconciled { get; set; }
+        
+        public Byte[] Timestamp { get; set; }
         
         public Account Account { get; set; }
         public Category Category { get; set; }

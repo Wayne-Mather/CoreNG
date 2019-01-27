@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 src/app.db
 src/UI/ClientApp/yarn.lock
+src/UI/coreng.db
+src/UI/coreng_auth.db
