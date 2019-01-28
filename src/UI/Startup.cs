@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using coreng.Data;
+using CoreNG.Domain.Accounts.Requests;
 using CoreNG.Persistence;
 using CoreNG.Persistence.Sqlite;
 using Microsoft.AspNetCore.Builder;
@@ -79,18 +80,7 @@ namespace coreng
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            // seed a default user if does not already exist
-            if (!authContext.Users.Any(x => x.UserName == "admin"))
-            {
-                var u = new ApplicationUser();
-                u.UserName = "admin";
-                u.Email = "admin@127.0.0.1";
-                var task = userManager.CreateAsync(u);
-                task.Wait();
-                task = userManager.AddPasswordAsync(u, "password123");
-                task.Wait();
-            }
-
+            new SeedAuthDbRequest(authContext,userManager).Seed();
             DbSeeder.Seed(coreNgContext);
 
             app.UseStaticFiles();

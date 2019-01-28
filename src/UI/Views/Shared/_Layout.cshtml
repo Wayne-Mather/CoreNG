@@ -1,45 +1,156 @@
-﻿<!DOCTYPE html>
+﻿@using coreng
+@using coreng.Data
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - src</title>
+    
+    <title>CoreNG</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    @* TODO: Move to a webpack system *@
+    
+    <!-- Bootstrap & Font Awesome -->
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-overrides.css" rel="stylesheet" />
+
+    <!-- Sidebar -->
+    <link href="~/css/sidebar-nav.css" rel="stylesheet" />
+
+    <!-- override -->
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    @RenderSection("styleHeader", required: false)
+
+    <!-- JQuery & JQuery UI-->
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
+    <!-- JS Validation -->
+    <script src="~/lib/jquery-validation/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/additional-methods.js"></script>
+    <script src="~/lib/jquery-validation/jquery.validate.unobtrusive.js"></script>
+
+    <!-- Morris Charts -->
+    <script src="~/lib/morris/raphael.min.js"></script>
+    <script src="~/lib/morris/morris.min.js"></script>
+
+    <!-- Bootstrap & Font Awesome -->
+    <script src="~/lib/bootstrap/js/popper.min.js"></script>
+    <script src="~/lib/bootstrap/js/popper-utils.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Moment -->
+    <script src="~/lib/moment/moment.js"></script>
+
+    <!-- Datatables Deps -->
+    <script type="text/javascript" src="~/lib/datatables/jszip/jszip.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/pdfmake/vfs_fonts.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/pdfmake/pdfmake.min.js"></script>
+
+    <!-- Datatables CSS -->
+    <link href="~/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/autofill/autoFill.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/buttons/buttons.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/colreorder/colReorder.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/fixedcolumns/fixedColumns.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/fixedheader/fixedHeader.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/keytable/keyTable.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/responsive/responsive.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/rowgroup/rowGroup.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/rowreorder/rowReorder.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/scroller/scroller.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables/select/select.bootstrap4.min.css" />
+
+    <!-- Datatables JS -->
+    <script type="text/javascript" src="~/lib/datatables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/autofill/dataTables.autoFill.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/autofill/autoFill.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/autofill/autoFill.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/buttons/datatables.buttons.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/buttons/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/buttons/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/buttons/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/buttons/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/buttons/buttons.print.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/colreorder/dataTables.colReorder.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/fixedcolumns/dataTables.fixedColumns.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/fixedheader/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/keytable/dataTables.keyTable.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/responsive/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/responsive/responsive.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/rowgroup/dataTables.rowGroup.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/rowreorder/dataTables.rowReorder.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/scroller/dataTables.scroller.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatables/select/dataTables.select.min.js"></script>
+
+    <script type="text/javascript" src="~/js/datetime-moment.js"></script>
+
+    <script type="text/javascript" src="~/js/site.min.js" asp-append-version="true"></script>
+    
+    @RenderSection("scriptHeader", required: false)
+    
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">src</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-                <partial name="_LoginPartial" />
-            </div>
-        </div>
-    </nav>
+<nav class="navbar sticky-top fixed-top navbar-expand-lg navbar-light bg-light d-print-none">
+    <a class="navbar-brand" asp-area="" asp-controller="Home">CoreNG</a>
 
-    <partial name="_CookieConsentPartial" />
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+            </li>
+            
+        </ul>
+            <ul class="navbar-nav mr-auto my-2 my-lg-0 mr-sm-2">
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav nav-item  mr-1">
+                        @if (Url.RouteUrl(Url.ActionContext.RouteData.Values) == "/Manage")
+                        {
+                            <a class="nav-link active activeModule " asp-area="" asp-controller="Manage" asp-action="Index">
+                                <i class="fa fa-user"></i> @UserManager.GetUserName(User) <span class="sr-only">(current)</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Manage" asp-action="Index">
+                                <i class="fa fa-user"></i> @UserManager.GetUserName(User) <span class="sr-only">(current)</span>
+                            </a>
+                        }
+
+                    </li>
+
+                    <li class="nav nav-item mr-2">
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                            <button type="submit" class="btn btn-link navbar-btn navbar-link nav-link">Log off</button>
+                        </form>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="nav nav-item nav-link float-xs-right">
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    </li>
+                }
+
+            </ul>
+    </div>
+</nav>
 
     <div class="container body-content">
         @RenderBody()
@@ -48,27 +159,6 @@
             <p>&copy; 2019 - src</p>
         </footer>
     </div>
-
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
 
     @RenderSection("Scripts", required: false)
 </body>
