@@ -10,6 +10,12 @@
   "projects": {
     "coreng-core": {
       "tags": []
+    },
+    "fullclient": {
+      "tags": []
+    },
+    "fullclient-e2e": {
+      "tags": []
     }
   }
 }

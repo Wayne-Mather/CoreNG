@@ -46,7 +46,19 @@
     "popper.js": "^1.14.6",
     "rxjs": "~6.3.3",
     "subsink": "^0.1.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "@ng-bootstrap/ng-bootstrap": "^4.0.2",
+    "@types/datatables.net": "^1.10.14",
+    "@types/jquery": "^3.3.29",
+    "angular-datatables": "^7.0.0",
+    "datatables.net": "^1.10.19",
+    "datatables.net-dt": "^1.10.19",
+    "font-awesome": "^4.7.0",
+    "linqts": "^1.12.2",
+    "ng-swagger-gen": "^1.4.3",
+    "tslib": "^1.9.0",
+    "primeicons": "^1.0.0",
+    "primeng": "^7.0.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.11.0",
