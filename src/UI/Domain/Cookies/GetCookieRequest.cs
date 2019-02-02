@@ -26,10 +26,11 @@ namespace coreng.Domain.Cookies
             this.Model = new CookieResponseViewModel<T>();
         }
 
-        public GetCookieResponse<T> Handle()
+        public override GetCookieResponse<T> Send()
         {
             return new GetCookieHandler(_request, _response).Handle(this);
         }
+
     }
 
     public class GetCookieResponse<T>: BaseResponse<CookieResponseViewModel<T>> where T: class 

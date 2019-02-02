@@ -4,6 +4,8 @@ using coreng.Domain.Cookies;
 using CoreNg.RequestResponse.Base;
 using CoreNG.Domain.Accounts.Requests;
 using CoreNG.Persistence.Sqlite;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -11,12 +13,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.Extensions.Logging;
 
+
+
 namespace coreng.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class UsersController: BaseCoreNgController
-    {
+    {  
+                                           
         public UsersController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext authContext, CoreNgDbContext appContext, IHttpContextAccessor httpContextAccessor, ILoggerFactory loggerFactory) : base(userManager, roleManager, signInManager, authContext, appContext, httpContextAccessor, loggerFactory)
         {
         }

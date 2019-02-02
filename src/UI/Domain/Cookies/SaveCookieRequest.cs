@@ -15,7 +15,7 @@ namespace coreng.Domain.Cookies
             this.Model = new CookieResponseViewModel<T>();
         }
 
-        public SaveCookieResponse<T> Handle()
+        public override SaveCookieResponse<T> Send()
         {
             return new SaveCookieHandler(_request, _response).Handle(this);
         }
