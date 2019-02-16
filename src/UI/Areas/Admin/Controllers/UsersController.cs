@@ -28,6 +28,8 @@ namespace coreng.Areas.Admin.Controllers
 
         private string _cookieName = "CORENG_USERS";
         
+        #region Search
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -64,6 +66,10 @@ namespace coreng.Areas.Admin.Controllers
             return View(response);
         }
         
+        #endregion 
+        
+        #region Create
+        
         [HttpGet]
         public IActionResult Create()
         {
@@ -88,6 +94,10 @@ namespace coreng.Areas.Admin.Controllers
             return View(vm);
         }
         
+        #endregion 
+        
+        #region Edit 
+        
         [HttpGet]
         public IActionResult Edit(string id)
         {
@@ -96,10 +106,31 @@ namespace coreng.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            var request = new GetUserRequest(_authContext, _userManager);
-            request.Model.Username = id;
+            var vm = new UpdateUserResponse();
+            vm.Model.Fill(id, _authContext);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(UpdateUserResponse vm)
+        {
+            if (vm == null || vm.Model == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var request = new UpdateUserRequest(_authContext, _userManager);
+            request.Model = vm.Model;
             var response = request.Send();
+            if (response.IsSuccessful)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View(response);
         }
+        
+        #endregion 
     }
 }
