@@ -149,7 +149,7 @@ namespace coreng
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PFMS API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoreNG API V1");
             });
 #endif            
             app.UseAuthentication();
